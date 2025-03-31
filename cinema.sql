@@ -143,3 +143,7 @@ CREATE TABLE seats (
     FOREIGN KEY (schedule_id) REFERENCES schedules(schedule_id),
     FOREIGN KEY (order_id) REFERENCES orders(order_id)
 );
+-- 8. 帳戶表
+CREATE TABLE Account (
+    user_id VARCHAR(10) NOT NULL,
+    password VARCHAR(10) NOT NULL);
