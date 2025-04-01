@@ -146,4 +146,5 @@ CREATE TABLE seats (
 -- 8. 帳戶表
 CREATE TABLE Account (
     user_id VARCHAR(10) NOT NULL,
-    password VARCHAR(10) NOT NULL);
+    password VARCHAR(10) NOT NULL,
+    wallet INT NOT NULL);
