@@ -7,7 +7,6 @@
   <main class="mt-4">
     <RouterView />
   </main>
-  <Calendar class="mt-10" />
 </template>
 
 <script setup lang="ts">
