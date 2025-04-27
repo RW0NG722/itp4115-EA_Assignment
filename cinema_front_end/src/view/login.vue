@@ -8,22 +8,27 @@
       />
     </Col>
     <Col :span="8" :offset="2" align="center">
-      <div class="flex justify-between mt-20 mb-5 mr-26 ml-26">
-        <a-button
-          :type="bt1act ? 'primary' : 'default'"
-          @click="switchLoginMode(1)"
-          >会员登陆1</a-button
-        >
-        <a-button
-          :type="bt2act ? 'primary' : 'default'"
-          @click="switchLoginMode(2)"
-          >会员登陆2</a-button
-        >
-        <a-button
-          :type="bt3act ? 'primary' : 'default'"
-          @click="switchLoginMode(3)"
-          >会员登陆3</a-button
-        >
+      <div class="flex justify-between mt-20 mb-5 mr-26 ml-12">
+        <Space size="large">
+          <a-button
+            :type="bt1act ? 'primary' : 'default'"
+            @click="switchLoginMode(1)"
+          >
+            会员登陆1
+          </a-button>
+          <a-button
+            :type="bt2act ? 'primary' : 'default'"
+            @click="switchLoginMode(2)"
+          >
+            会员登陆2
+          </a-button>
+          <a-button
+            :type="bt3act ? 'primary' : 'default'"
+            @click="switchLoginMode(3)"
+          >
+            会员登陆3
+          </a-button>
+        </Space>
       </div>
       <a-form
         :model="formState"
@@ -59,13 +64,22 @@
             </template>
           </a-input-password>
         </a-form-item>
-        <a href="#">忘记密码</a>
+
+        <a-form-item>
+          <a href="#">忘记密码</a>
+        </a-form-item>
 
         <a-form-item class="mt-6">
           <a-button
             type="primary"
-            html-type="submit"
             class="login-form-button mr-5"
+            @click="
+              formState = {
+                username: '',
+                password: '',
+                remember: true,
+              }
+            "
           >
             重置
           </a-button>
@@ -88,14 +102,40 @@
           <a class="login-form-forgot" href="">Forgot password</a>
         </a-form-item>
       </a-form>
+
+      <a-button type="primary" class="ml-5">
+        <template #icon>
+          <FacebookOutlined style="all: initial" />
+        </template>
+        FaceBook登入
+      </a-button>
+      <br />
+      (Facebook登入只適用於cinema.com.hk會員)
+      <br />
+      ---------- 或 ----------
+      <br />
+      <a-button
+        type="primary"
+        html-type="submit"
+        class="login-form-button ml-5"
+        danger
+        @click="router.push('/register')"
+      >
+        成为会员
+      </a-button>
     </Col>
   </Row>
 </template>
 <script lang="ts" setup>
   import { reactive, computed } from 'vue'
-  import { UserOutlined, LockOutlined } from '@ant-design/icons-vue'
-  import { Row, Col } from 'ant-design-vue'
+  import Icon, {
+    UserOutlined,
+    LockOutlined,
+    FacebookOutlined,
+  } from '@ant-design/icons-vue'
+  import { Row, Col, Space } from 'ant-design-vue'
   import { ref } from 'vue'
+  import router from '@/modules/router/router'
 
   const bt1act = ref(true)
   const bt2act = ref(false)
@@ -109,6 +149,7 @@
 
   const switchLoginMode = (mode: number) => {
     resetBtn()
+    // change api
     if (mode === 1) {
       bt1act.value = true
     } else if (mode === 2) {
@@ -128,6 +169,10 @@
     password: '',
     remember: true,
   })
+  function onChange() {
+    console.log('formState', formState)
+  }
+
   const onFinish = (values: any) => {
     console.log('Success:', values)
   }
@@ -146,9 +191,7 @@
   #components-form-demo-normal-login .login-form-forgot {
     float: right;
   }
-  #components-form-demo-normal-login .login-form-button {
-    width: 100%;
-  }
+
   .imgcss {
     width: 100%;
   }

@@ -1,18 +1,18 @@
 import { createWebHashHistory, createRouter } from 'vue-router'
 
 const routes = [
-  { 
+  {
     // 首页
     name: 'index',
     path: '/',
     component: () => import('@/view/index.vue'),
   },
-  { 
-    // 首页
-    name: 'index',
-    path: '/index',
-    component: () => import('@/view/index.vue'),
-  },
+  // {
+  //   // 首页
+  //   name: 'index',
+  //   path: '/index',
+  //   component: () => import('@/view/index.vue'),
+  // },
   {
     // 登录页
     name: 'login',
