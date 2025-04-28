@@ -39,12 +39,11 @@ class User(db.Model):
     birth_date = db.Column(db.Date, nullable=False)  # User's birth date
     mobile = db.Column(db.String(15), nullable=False)  # User's mobile number
     email = db.Column(db.String(100), unique=True, nullable=False)  # User's email
-    email_confirmed = db.Column(db.Boolean, default=False)  # Email confirmation status
-    occupation = db.Column(db.String(50), nullable=True)  # User's occupation
-    income = db.Column(db.String(50), nullable=True)  # User's income range
-    work_area = db.Column(db.String(50), nullable=True)  # User's work area
-    residential_area = db.Column(db.String(50), nullable=True)  # User's residential area
-    promotional_email = db.Column(db.Boolean, default=False)
+    receive_email = db.Column(db.Boolean, default=False)  # Email receipt preference
+    career = db.Column(db.JSON, nullable=False)  # User's career (JSON array)
+    income = db.Column(db.JSON, nullable=False)  # User's income (JSON array)
+    work_area = db.Column(db.JSON, nullable=False)  # User's work area (JSON array)
+    living_area = db.Column(db.JSON, nullable=False)  # User's living area (JSON array)
 
 class Order(db.Model):
     __tablename__ = 'order'
@@ -60,7 +59,7 @@ class Promotion(db.Model):
     __tablename__ = 'promotion'
     
     id = db.Column(db.Integer, primary_key=True)
-    code = db.Column(db.String(20), unique=True, nullable=False)
+    message = db.Column(db.String, unique=True, nullable=False)
 
 class Movie(db.Model):
     __tablename__ = 'movie'
