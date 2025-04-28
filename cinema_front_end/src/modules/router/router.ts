@@ -5,7 +5,7 @@ const routes = [
     // 首页
     name: 'index',
     path: '/',
-    component: () => import('@/view/index.vue'),
+    component: () => import('@/view/index/index.vue'),
   },
   // {
   //   // 首页
@@ -40,6 +40,11 @@ const routes = [
     name: 'special',
     path: '/special',
     component: () => import('@/view/register.vue'),
+  },
+  {
+    name: 'profile',
+    path: '/profile',
+    component: () => import('@/view/profile/index.vue'),
   },
 ]
 

@@ -1,33 +1,16 @@
 <template>
-  <nav class="navbar">
-    <div class="logo" style="font-size: 1.5em; font-weight: bold">
-      <a href="#/index">Cinema</a>
-    </div>
-    <a href="https://cinema.com.hk/" class="text-blue-600" target="_blank">
-      reference
-    </a>
-    <ul style="list-style: none; display: flex; margin: 0; padding: 0">
-      <li style="margin: 0 15px">
-        <a href="#/login" class="nav-tabs">登入</a>
-      </li>
-      <li style="margin: 0 15px">|</li>
-      <li style="margin: 0 15px">
-        <a href="#/register" class="nav-tabs">成为会员</a>
-      </li>
-      <li style="margin: 0 15px"><a href="#" class="nav-tabs"></a></li>
-      <li style="margin: 0 15px"><a href="#" class="nav-tabs">FaceBook</a></li>
-    </ul>
-  </nav>
-  <br /><br />
+  <GlobalHeader />
   <Row>
     <a-col :span="24" align="center">
       <Space>
-        <div>logo</div>
-        <div>banner</div>
+        <div class="w-[210px] h-[110px]">
+          <img src="/src/assets/index_logo.png" />
+        </div>
+        <div class="w-[610px] h-[90px] border">广告位招租</div>
       </Space>
     </a-col>
-    <a-col :span="24" style="padding: 20px; text-align: center">
-      carousel
+    <a-col :xl="18" :xxl="15" class="border mr-auto ml-auto">
+      <IndexCarousel />
     </a-col>
     <a-col :span="24" style="padding: 20px; text-align: center">
       <Space :size="50">
@@ -65,23 +48,7 @@
   import Special from './tabs/Special.vue'
   import Cinemas from './tabs/Cinemas.vue'
   import GiftCardShop from './tabs/GiftCardShop.vue'
+  import IndexCarousel from './IndexCarousel.vue'
+  import GlobalHeader from '../GlobalHeader.vue'
 </script>
-<style scoped>
-  .nav-tabs {
-    color: white;
-    text-decoration: none;
-  }
-  .navbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background-color: #333;
-    color: white;
-    padding: 10px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    z-index: 1000;
-  }
-</style>
+<style scoped></style>

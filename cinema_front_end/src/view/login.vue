@@ -1,4 +1,5 @@
 <template>
+  <GlobalHeader />
   <Row class="ml-10 mr-10">
     <Col :span="12" class="overflow-hidden">
       <img
@@ -136,6 +137,8 @@
   import { Row, Col, Space } from 'ant-design-vue'
   import { ref } from 'vue'
   import router from '@/modules/router/router'
+  import { useUserStore } from '@/modules/store/user'
+  import GlobalHeader from './GlobalHeader.vue'
 
   const bt1act = ref(true)
   const bt2act = ref(false)
@@ -146,6 +149,8 @@
     bt3act.value = false
     bt2act.value = false
   }
+
+  const user = useUserStore()
 
   const switchLoginMode = (mode: number) => {
     resetBtn()
@@ -169,11 +174,10 @@
     password: '',
     remember: true,
   })
-  function onChange() {
-    console.log('formState', formState)
-  }
 
   const onFinish = (values: any) => {
+    user.login(values.username, values.password)
+    console.log('Login:', user.getUserInfo)
     console.log('Success:', values)
   }
 
