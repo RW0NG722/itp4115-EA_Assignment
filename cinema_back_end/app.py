@@ -84,17 +84,14 @@ def signup():
 
 
 # Login Route
-@app.route('/login', methods=['GET'])
+@app.route('/login', methods=['POST'])
 def login():
-    # data = request.json
-    data = {
-        "email": "asdasda@qwe.com",
-        "password": "123456"
-    }
+    data = request.json
+    print('---------------')
+    print(data)
+    print('---------------')
     user = User.query.filter_by(email=data['email']).first()
-    print("-----------------------------")
-    print(user)
-    print("-----------------------------")
+
     # Validate input
     if not all(key in data for key in ['email', 'password']):
         return jsonify({'message': 'Missing required fields!'}), 400
@@ -115,14 +112,14 @@ def login():
         "birthDate": user.birth_date.isoformat(),
         "phone": user.phone,
         "email": user.email,
-        "receiveEmail": user.email,
+        "receiveEmail": user.email_subscription,
         "career": user.occupation,
         "income": user.income_level,
         "workArea": user.work_location,
         "livingArea": user.residence_location
     }
 
-    return jsonify({'message': 'Login successful!', 'user': response_data}), 200
+    return jsonify({'message': 'Login successful!', 'data': response_data, 'code': 200}), 200
     # return jsonify({}), 200
 
 if __name__ == '__main__':
