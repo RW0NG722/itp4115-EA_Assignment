@@ -40,8 +40,8 @@ CREATE TABLE `cinemas`  (
 -- ----------------------------
 -- Table structure for houses
 -- ----------------------------
-DROP TABLE IF EXISTS `house`;
-CREATE TABLE `house` (
+DROP TABLE IF EXISTS `houses`;
+CREATE TABLE `houses` (
   `house_id` int(11) NOT NULL AUTO_INCREMENT,
   `cinema_id` int NOT NULL,
   `house_name` VARCHAR(100) NOT NULL,
@@ -86,9 +86,7 @@ CREATE TABLE `movies`  (
   `synopsis` text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `director` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `cast` text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `format` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `type` char(1) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `poster_url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `movie_type` char(11) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`movie_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 

@@ -144,7 +144,7 @@ def edit_user(user_id):
     return jsonify({"message": "User updated"}), 200
 
 # order Route
-@app.route('/orders', methods=['POST'])
+@app.route('/orders', methods=['GET'])
 def create_order():
     data = request.json
     new_order = Order(
@@ -199,14 +199,6 @@ def get_order(order_id):
         "email": order.email
     }
     return jsonify(order_data), 200
-
-# Delete an order by ID
-@app.route('/orders/<int:order_id>', methods=['DELETE'])
-def delete_order(order_id):
-    order = Order.query.get_or_404(order_id)
-    db.session.delete(order)
-    db.session.commit()
-    return jsonify({"message": "Order deleted"}), 200
 
 if __name__ == '__main__':
     app.run(debug=True)

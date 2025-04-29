@@ -9,17 +9,13 @@ class Cinemas(db.Model):
     name = db.Column(db.String(100), nullable=False)
     address = db.Column(db.String(255), nullable=False)
     capacity = db.Column(db.Integer, nullable=False)
-    house = db.Column(db.String(50), nullable=False)
-    sent = db.Column(db.String(255), nullable=False)
-    format = db.Column(db.String(255), nullable=False)
-    ticket_information = db.Column(db.String(255), nullable=False)
 
 class Houses(db.Model):
     __tablename__ = 'houses'
 
     house_id = db.Column(db.Integer, primary_key=True)
     cinema_id = db.Column(db.Integer, db.ForeignKey('cinemas.cinema_id'), nullable=False)  
-    name = db.Column(db.String(100), nullable=False)  
+    house_name = db.Column(db.String(100), nullable=False)  
     house_type = db.Column(db.String(100), nullable=False)  
     available = db.Column(db.Boolean, default=True)  
 
@@ -43,8 +39,7 @@ class Movies(db.Model):
     synopsis = db.Column(db.Text, nullable=False)
     director = db.Column(db.String(100), nullable=False)
     cast = db.Column(db.Text, nullable=False)
-    format = db.Column(db.String(50), nullable=False)
-    type = db.Column(db.String(1), nullable=False)  # Assuming type is a single character
+    movie_type = db.Column(db.String(11), nullable=False)  # Assuming type is a single character
 
 class Orders(db.Model):
     __tablename__ = 'orders'
