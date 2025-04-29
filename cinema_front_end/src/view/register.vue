@@ -1,4 +1,5 @@
 <template>
+  <GlobalHeader />
   <a-form
     :model="formState"
     name="basic"
@@ -12,10 +13,10 @@
     账户资料
     <a-form-item
       label="用户名"
-      name="username"
+      name="user_name"
       :rules="[{ required: true, message: 'Please input your username!' }]"
     >
-      <a-input v-model:value="formState.username" />
+      <a-input v-model:value="formState.user_name" />
     </a-form-item>
 
     <a-form-item
@@ -27,37 +28,37 @@
     </a-form-item>
     <a-form-item
       label="重新输入密码"
-      name="confirmPassword"
+      name="confirm_password"
       :rules="[{ required: true, message: 'Please confirm your password!' }]"
     >
-      <a-input-password v-model:value="formState.confirmPassword" />
+      <a-input-password v-model:value="formState.confirm_password" />
     </a-form-item>
 
     <Divider />
     基本资料
     <a-form-item
       label="名"
-      name="firstName"
+      name="first_name"
       :rules="[{ required: true, message: 'Please input your first name!' }]"
     >
-      <a-input v-model:value="formState.firstName" />
+      <a-input v-model:value="formState.first_name" />
     </a-form-item>
 
     <a-form-item
       label="姓"
-      name="lastName"
+      name="last_name"
       :rules="[{ required: true, message: 'Please input your last name!' }]"
     >
-      <a-input v-model:value="formState.lastName" />
+      <a-input v-model:value="formState.last_name" />
     </a-form-item>
-    <a-form-item label="性别" name="sex">
-      <a-radio-group v-model:value="formState.sex">
+    <a-form-item label="性别" name="gender">
+      <a-radio-group v-model:value="formState.gender">
         <a-radio :value="'男'">男</a-radio>
         <a-radio :value="'女'">女</a-radio>
       </a-radio-group>
     </a-form-item>
-    <a-form-item label="出生日期" name="birthDate">
-      <DatePicker v-model:value="birthDate" />
+    <a-form-item label="出生日期" name="birth_date">
+      <DatePicker v-model:value="birth_date" />
     </a-form-item>
 
     <Divider />
@@ -79,14 +80,14 @@
     </a-form-item>
     <a-form-item
       label="确定电邮"
-      name="confirmEmail"
+      name="confirm_email"
       :rules="[{ required: true, message: 'Please confirm your email!' }]"
     >
-      <a-input v-model:value="formState.confirmEmail" />
+      <a-input v-model:value="formState.confirm_email" />
     </a-form-item>
     <a-form-item
       label="接受电子宣传邮件"
-      name="receiveEmail"
+      name="receive_email"
       :rules="[
         {
           required: true,
@@ -94,7 +95,7 @@
         },
       ]"
     >
-      <a-radio-group v-model:value="formState.receiveEmail">
+      <a-radio-group v-model:value="formState.receive_email">
         <a-radio :value="1">是(中文)</a-radio>
         <a-radio :value="2">是(英文)</a-radio>
         <a-radio :value="3">否</a-radio>
@@ -111,23 +112,23 @@
       />
     </a-form-item>
 
-    <a-form-item label="入息" name="income">
+    <a-form-item label="入息" name="income_level">
       <a-cascader
-        v-model:value="formState.income"
+        v-model:value="formState.income_level"
         :options="income"
         placeholder="Please select"
       />
     </a-form-item>
-    <a-form-item label="工作地区" name="workArea">
+    <a-form-item label="工作地区" name="work_location">
       <a-cascader
-        v-model:value="formState.workArea"
+        v-model:value="formState.work_location"
         :options="area"
         placeholder="Please select"
       />
     </a-form-item>
-    <a-form-item label="居住地区" name="livingArea">
+    <a-form-item label="居住地区" name="residence_location">
       <a-cascader
-        v-model:value="formState.livingArea"
+        v-model:value="formState.residence_location"
         :options="area"
         placeholder="Please select"
       />
@@ -145,56 +146,57 @@
   import { Dayjs } from 'dayjs'
   import { reactive, ref, watch } from 'vue'
   import axios from 'axios'
+import GlobalHeader from './GlobalHeader.vue'
 
   interface FormState {
-    username: string
+    user_name: string
     password: string
-    confirmPassword: string
-    firstName: string
-    lastName: string
-    sex: string
-    birthDate: string
+    confirm_password: string
+    first_name: string
+    last_name: string
+    gender: string
+    birth_date: string
     phone: string
     email: string
-    confirmEmail: string
-    receiveEmail: number
+    confirm_email: string
+    receive_email: number
     cereer: string
-    income: string
-    workArea: string
-    livingArea: string
+    income_level: string
+    work_location: string
+    residence_location: string
   }
 
-  const birthDate = ref<Dayjs>()
+  const birth_date = ref<Dayjs>()
 
-  watch(birthDate, (newVal) => {
+  watch(birth_date, (newVal) => {
     if (newVal) {
-      formState.birthDate = newVal.format('YYYY-MM-DD')
+      formState.birth_date = newVal.format('YYYY-MM-DD')
     } else {
-      formState.birthDate = ''
+      formState.birth_date = ''
     }
   })
 
   const formState = reactive<FormState>({
-    username: '1',
+    user_name: '1',
     password: '2',
-    confirmPassword: '3',
-    firstName: '4',
-    lastName: '5',
-    sex: '1',
-    birthDate: '',
+    confirm_password: '3',
+    first_name: '4',
+    last_name: '5',
+    gender: '1',
+    birth_date: '',
     phone: '1',
     email: '1',
-    confirmEmail: '1',
-    receiveEmail: 1,
+    confirm_email: '1',
+    receive_email: 1,
     cereer: '',
-    income: '',
-    workArea: '',
-    livingArea: '',
+    income_level: '',
+    work_location: '',
+    residence_location: '',
   })
 
   const validateForm = () => {
-    const { password, confirmPassword } = formState
-    if (password !== confirmPassword) {
+    const { password, confirm_password } = formState
+    if (password !== confirm_password) {
       message.error('两次输入的密码不一致')
       return false
     }

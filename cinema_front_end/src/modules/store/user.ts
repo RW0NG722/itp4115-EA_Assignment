@@ -1,55 +1,29 @@
 import { message } from 'ant-design-vue'
 import axios from 'axios'
-import { userInfo } from 'os'
 import { defineStore } from 'pinia'
+import router from '../router/router'
 
 export const useUserStore = defineStore('user', {
   state: () => ({
     userInfo:{
-      id: '',
-      username: '',
+      user_id: '',
+      user_name: '',
       email: '',
-      userAge: undefined,
-      firstName:'',
-      lastName: '',
+      user_age: undefined,
+      first_name:'',
+      last_name: '',
       gender: '',
-      birthDate:'',
+      birth_date:'',
       phone:'',
-      receiveEmail:'',
-      careea:'',
-      income:'',
-      workArea:'',
-      livingArea:''
+      email_subscription:'',
+      occupation:'',
+      income_level:'',
+      work_location:'',
+      residence_location:''
     },
-    userId: '',
-    username: '',
-    email: '',
-    userAge: undefined,
-    first_name:'',
-    last_name: '',
-    gender: '',
-    birth_date:'',
-    phone:'',
-    email_subscription:'',
-    occupation:'',
-    income_level:'',
-    work_location:'',
-    residence_location:''
   }),
   getters: {
-    getUserInfo: (state) => state,
-    getUserName: (state) => state.username,
-    getEmail: (state)=> state.email,
-    getUserAge: (state) => state.userAge,
-    getUserFirstName: (state) => state.first_name,
-    getUserLastName: (state) => state.last_name,
-    getUserGender: (state) => state.gender,
-    getUserBirthDate: (state) => state.birth_date,
-    getUserEmailSub: (state) => state.email_subscription,
-    getUserOccupation: (state) => state.occupation,
-    getUserIncome: (state) => state.income_level,
-    getUserWorkLocation: (state) => state.work_location,
-    getUserResidenceLocation: (state) => state.residence_location,
+    getUserInfo: (state) => state.userInfo,
   },
   actions: {
     login(email: string, password: string) {
@@ -60,10 +34,10 @@ export const useUserStore = defineStore('user', {
       }).then((res) => {
         const data = res.data
         if(data.code==200){
-          console.log(data.data.username)
+          console.log(data.data.user_name)
           this.setUserInfo(data.data)
           message.success("登录成功")
-          console.log("oooo",this.getUserInfo)
+          router.push('#/')
         }
       })
       
