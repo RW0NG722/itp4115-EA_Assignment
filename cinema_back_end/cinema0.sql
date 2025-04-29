@@ -29,7 +29,6 @@ CREATE TABLE `cinemas`  (
   `house` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `sent` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `format` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `ticket information` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`cinema_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
@@ -105,9 +104,9 @@ CREATE TABLE `orders`  (
   `order_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `seat_name` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `ticket_type` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `price` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `service_fee` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `total_amount` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `price` int(11) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `service_fee` int(11) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `total_amount` int(11) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `email` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`order_id`) USING BTREE,
   INDEX `user_id`(`user_id`) USING BTREE,
@@ -130,13 +129,14 @@ CREATE TABLE `showtimes`  (
   `cinema_id` int(11) NOT NULL,
   `show_date` date NOT NULL,
   `show_time` time NOT NULL,
-  `house_number` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `house_name` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `price` decimal(10, 2) NOT NULL,
   PRIMARY KEY (`showtime_id`) USING BTREE,
   INDEX `movie_id`(`movie_id`) USING BTREE,
   INDEX `cinema_id`(`cinema_id`) USING BTREE,
   CONSTRAINT `showtimes_ibfk_1` FOREIGN KEY (`movie_id`) REFERENCES `movies` (`movie_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `showtimes_ibfk_2` FOREIGN KEY (`cinema_id`) REFERENCES `cinemas` (`cinema_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+  CONSTRAINT `showtimes_ibfk_2` FOREIGN KEY (`cinema_id`) REFERENCES `cinemas` (`cinema_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `showtimes_ibfk_3` FOREIGN KEY (`house_name`) REFERENCES `houses` (`house_name`) ON DELETE RESTRICT ON UPDATE RESTRICT,
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------

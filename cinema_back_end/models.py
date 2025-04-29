@@ -60,7 +60,7 @@ class Showtimes(db.Model):
     cinema_id = db.Column(db.Integer, db.ForeignKey('cinemas.cinema_id'), nullable=False)
     show_date = db.Column(db.Date, nullable=False)
     show_time = db.Column(db.Time, nullable=False)
-    hall_number = db.Column(db.String(10), nullable=False)
+    house_name = db.Column(db.String(10), nullable=False)
     seat_number = db.Column(db.String(10), nullable=False)
     price = db.Column(db.Numeric(10, 2), nullable=False)
 

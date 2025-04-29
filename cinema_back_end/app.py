@@ -144,22 +144,44 @@ def edit_user(user_id):
     return jsonify({"message": "User updated"}), 200
 
 # order Route
-@app.route('/orders', methods=['GET'])
+@app.route('/orders', methods=['POST'])
 def create_order():
     data = request.json
-    new_order = Order(
+
+    # Validate input
+    required_fields = ['user_id', 'showtime_id', 'seat_name', 'ticket_type', 'price', 'service_fee', 'email']
+    if not all(field in data for field in required_fields):
+        return jsonify({'message': 'Missing required fields!'}), 400
+
+    # Convert price and service fee to float and calculate total amount
+    try:
+        price = float(data['price'])
+        service_fee = float(data['service_fee'])
+        total_amount = price + service_fee
+    except ValueError:
+        return jsonify({'message': 'Invalid price or service fee!'}), 400
+
+    # Create a new order
+    new_order = Orders(
         user_id=data['user_id'],
         showtime_id=data['showtime_id'],
+        order_date=datetime.utcnow(),  # Use current UTC time
         seat_name=data['seat_name'],
         ticket_type=data['ticket_type'],
-        price=data['price'],
-        service_fee=data['service_fee'],
-        total_amount=data['total_amount'],
+        price=data['price'],  # Store original price as a string
+        service_fee=data['service_fee'],  # Store original service fee as a string
+        total_amount=str(total_amount),  # Store total amount as a string
         email=data['email']
     )
+
     db.session.add(new_order)
     db.session.commit()
-    return jsonify({"message": "Order created", "order_id": new_order.order_id}), 201
+
+    return jsonify({
+        'message': 'Order created',
+        'order_id': new_order.order_id,
+        'total_amount': total_amount  # Return the calculated total amount
+    }), 201
 
 # Get all orders
 @app.route('/orders', methods=['GET'])
