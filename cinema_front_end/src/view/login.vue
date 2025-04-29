@@ -39,11 +39,11 @@
         @finishFailed="onFinishFailed"
       >
         <a-form-item
-          name="username"
-          :rules="[{ required: true, message: 'Please input your username!' }]"
+          name="email"
+          :rules="[{ required: true, message: 'Please input your email!' }]"
         >
           <a-input
-            v-model:value="formState.username"
+            v-model:value="formState.email"
             placeholder="用户名称/电子邮件"
           >
             <template #prefix>
@@ -76,7 +76,7 @@
             class="login-form-button mr-5"
             @click="
               formState = {
-                username: '',
+                email: '',
                 password: '',
                 remember: true,
               }
@@ -165,27 +165,25 @@
   }
 
   interface FormState {
-    username: string
+    email: string
     password: string
     remember: boolean
   }
   const formState = reactive<FormState>({
-    username: '',
+    email: '',
     password: '',
     remember: true,
   })
 
   const onFinish = (values: any) => {
-    user.login(values.username, values.password)
-    console.log('Login:', user.getUserInfo)
-    console.log('Success:', values)
+    user.login(values.email, values.password)
   }
 
   const onFinishFailed = (errorInfo: any) => {
     console.log('Failed:', errorInfo)
   }
   const disabled = computed(() => {
-    return !(formState.username && formState.password)
+    return !(formState.email && formState.password)
   })
 </script>
 <style scoped>
