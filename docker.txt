@@ -1,0 +1,5 @@
+
+docker pull mysql:8.0.42
+
+   
+docker run --name mysql-container -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=cinema -p 3306:3306 -d mysql:8.0.42
