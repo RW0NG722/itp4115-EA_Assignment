@@ -2,7 +2,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
-class Cinema(db.Model):
+class Cinemas(db.Model):
     __tablename__ = 'cinemas'
     
     cinema_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -14,7 +14,25 @@ class Cinema(db.Model):
     format = db.Column(db.String(255), nullable=False)
     ticket_information = db.Column(db.String(255), nullable=False)
 
-class Movie(db.Model):
+class Houses(db.Model):
+    __tablename__ = 'houses'
+
+    house_id = db.Column(db.Integer, primary_key=True)
+    cinema_id = db.Column(db.Integer, db.ForeignKey('cinemas.cinema_id'), nullable=False)  
+    name = db.Column(db.String(100), nullable=False)  
+    house_type = db.Column(db.String(100), nullable=False)  
+    available = db.Column(db.Boolean, default=True)  
+
+class Seats(db.Model):
+    __tablename__ = 'seats'
+
+    seat_id = db.Column(db.Integer, primary_key=True)
+    house_id = db.Column(db.Integer, db.ForeignKey('houses.house_id'), nullable=False) 
+    seat_number = db.Column(db.String(50), nullable=False)  
+    seat_available = db.Column(db.Boolean, default=True)  
+    seat_type = db.Column(db.String(20), nullable=False)  
+
+class Movies(db.Model):
     __tablename__ = 'movies'
     
     movie_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -28,30 +46,18 @@ class Movie(db.Model):
     format = db.Column(db.String(50), nullable=False)
     type = db.Column(db.String(1), nullable=False)  # Assuming type is a single character
 
-class Order(db.Model):
+class Orders(db.Model):
     __tablename__ = 'orders'
     
     order_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
     showtime_id = db.Column(db.Integer, db.ForeignKey('showtimes.showtime_id'), nullable=False)
     order_date = db.Column(db.DateTime, default=db.func.current_timestamp(), nullable=False)
-    seat_number = db.Column(db.String(10), nullable=False)
-    ticket_type = db.Column(db.String(50), nullable=False)
+    seat_number = db.Column(db.Integer, db.ForeignKey('seats.seat_number'), nullable=False)
     price = db.Column(db.String(10), nullable=False)
-    service_fee = db.Column(db.String(10), nullable=False)
-    total_amount = db.Column(db.String(10), nullable=False)
-    email = db.Column(db.String(100), nullable=False)
+    email = db.column(db.Integer, db.ForeignKey('seats.seat_number'), nullable=False)
 
-class PasswordReset(db.Model):
-    __tablename__ = 'password_resets'
-    
-    reset_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
-    email = db.Column(db.String(100), nullable=False)
-    reset_token = db.Column(db.String(100), nullable=False)
-    created_at = db.Column(db.DateTime, default=db.func.current_timestamp(), nullable=False)
-
-class Showtime(db.Model):
+class Showtimes(db.Model):
     __tablename__ = 'showtimes'
     
     showtime_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -67,7 +73,7 @@ class User(db.Model):
     __tablename__ = 'users'
     
     user_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    username = db.Column(db.String(10), nullable=False)
+    user_name = db.Column(db.String(10), nullable=False)
     password = db.Column(db.String(10), nullable=False)
     first_name = db.Column(db.String(50), nullable=False)
     last_name = db.Column(db.String(50), nullable=False)
