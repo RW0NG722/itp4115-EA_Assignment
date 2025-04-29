@@ -2,12 +2,12 @@ from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 import os
-from models import db, User
+from models import db, User, Movie
 from datetime import datetime
 
 app = Flask(__name__)
 CORS(app)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://root:root@localhost/cinema"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
@@ -44,7 +44,7 @@ def signup():
     # Create a new user
     new_user = User(
         username=data['username'],
-        password_hash=data['password'],  # Store the password directly (not recommended for production)
+        password=data['password'],  # Store the password directly (not recommended for production)
         first_name=data['firstName'],
         last_name=data['lastName'],
         gender=data['sex'],
@@ -81,38 +81,49 @@ def signup():
 
     return jsonify(response_data), 201
 
-# Login Route
-@app.route('/login', methods=['POST'])
-def login():
-    data = request.json
 
+
+# Login Route
+@app.route('/login', methods=['GET'])
+def login():
+    # data = request.json
+    data = {
+        "email": "asdasda@qwe.com",
+        "password": "123456"
+    }
+    user = User.query.filter_by(email=data['email']).first()
+    print("-----------------------------")
+    print(user)
+    print("-----------------------------")
     # Validate input
     if not all(key in data for key in ['email', 'password']):
         return jsonify({'message': 'Missing required fields!'}), 400
 
-    # Check if user exists
+    # # Check if user exists
     user = User.query.filter_by(email=data['email']).first()
-    if not user or user.password_hash != data['password']:  # Simple password check (not secure)
+    print(user)
+    if not user or user.password != data['password']:  # Simple password check (not secure)
         return jsonify({'message': 'Invalid credentials!'}), 401
 
     # Prepare the response data
     response_data = {
-        "id": user.id,
+        "id": user.user_id,
         "username": user.username,
         "firstName": user.first_name,
         "lastName": user.last_name,
         "gender": user.gender,
         "birthDate": user.birth_date.isoformat(),
-        "phone": user.mobile,
+        "phone": user.phone,
         "email": user.email,
-        "receiveEmail": user.receive_email,
-        "career": user.career,
-        "income": user.income,
-        "workArea": user.work_area,
-        "livingArea": user.living_area
+        "receiveEmail": user.email,
+        "career": user.occupation,
+        "income": user.income_level,
+        "workArea": user.work_location,
+        "livingArea": user.residence_location
     }
 
     return jsonify({'message': 'Login successful!', 'user': response_data}), 200
+    # return jsonify({}), 200
 
 if __name__ == '__main__':
     app.run(debug=True)

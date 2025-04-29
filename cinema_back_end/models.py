@@ -3,86 +3,80 @@ from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 
 class Cinema(db.Model):
-    __tablename__ = 'cinema'
+    __tablename__ = 'cinemas'
     
-    id = db.Column(db.Integer, primary_key=True)
+    cinema_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(100), nullable=False)
-    district = db.Column(db.String(200), nullable=False)
-    available = db.Column(db.Boolean, default=True)
-
-class House(db.Model):
-    __tablename__ = 'house'
-    
-    id = db.Column(db.Integer, primary_key=True)
-    cinema_id = db.Column(db.Integer, db.ForeignKey('cinema.id'), nullable=False)
-    screen_genre = db.Column(db.Integer, nullable=False)
-    available = db.Column(db.Boolean, default=True)
-
-class Seat(db.Model):
-    __tablename__ = 'seat'
-    
-    id = db.Column(db.Integer, primary_key=True)
-    house_id = db.Column(db.Integer, db.ForeignKey('house.id'), nullable=False)
-    genre = db.Column(db.String(255), nullable=False)
-    seat_number = db.Column(db.String(2), nullable=False)
-    seat_available = db.Column(db.Boolean, default=True)
-
-class User(db.Model):
-    __tablename__ = 'user'
-    
-    id = db.Column(db.Integer, primary_key=True)  # Unique ID for each user
-    username = db.Column(db.String(50), unique=True, nullable=False)  # User's username
-    password_hash = db.Column(db.String(128), nullable=False)  # Hashed password
-    first_name = db.Column(db.String(50), nullable=False)  # User's first name
-    last_name = db.Column(db.String(50), nullable=False)  # User's last name
-    gender = db.Column(db.String(10), nullable=False)  # User's gender
-    birth_date = db.Column(db.Date, nullable=False)  # User's birth date
-    mobile = db.Column(db.String(15), nullable=False)  # User's mobile number
-    email = db.Column(db.String(100), unique=True, nullable=False)  # User's email
-    receive_email = db.Column(db.Boolean, default=False)  # Email receipt preference
-    career = db.Column(db.JSON, nullable=False)  # User's career (JSON array)
-    income = db.Column(db.JSON, nullable=False)  # User's income (JSON array)
-    work_area = db.Column(db.JSON, nullable=False)  # User's work area (JSON array)
-    living_area = db.Column(db.JSON, nullable=False)  # User's living area (JSON array)
-
-class Order(db.Model):
-    __tablename__ = 'order'
-    
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    showtime_id = db.Column(db.Integer, db.ForeignKey('showtime.id'), nullable=False)
-    seat_id = db.Column(db.Integer, db.ForeignKey('seat.id'), nullable=False)
-    price = db.Column(db.Float, nullable=False)
-
-
-class Promotion(db.Model):
-    __tablename__ = 'promotion'
-    
-    id = db.Column(db.Integer, primary_key=True)
-    message = db.Column(db.String, unique=True, nullable=False)
+    address = db.Column(db.String(255), nullable=False)
+    capacity = db.Column(db.Integer, nullable=False)
+    house = db.Column(db.String(50), nullable=False)
+    sent = db.Column(db.String(255), nullable=False)
+    format = db.Column(db.String(255), nullable=False)
+    ticket_information = db.Column(db.String(255), nullable=False)
 
 class Movie(db.Model):
-    __tablename__ = 'movie'
+    __tablename__ = 'movies'
     
-    id = db.Column(db.Integer, primary_key=True)
+    movie_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     title = db.Column(db.String(100), nullable=False)
-    duration = db.Column(db.Integer, nullable=False)  # Duration in minutes
-    genre = db.Column(db.String(50), nullable=False)
-    description = db.Column(db.Text, nullable=True)
+    release_date = db.Column(db.Date, nullable=False)
+    duration = db.Column(db.Integer, nullable=False)
+    language = db.Column(db.String(50), nullable=False)
+    synopsis = db.Column(db.Text, nullable=False)
+    director = db.Column(db.String(100), nullable=False)
+    cast = db.Column(db.Text, nullable=False)
+    format = db.Column(db.String(50), nullable=False)
+    type = db.Column(db.String(1), nullable=False)  # Assuming type is a single character
 
-class Review(db.Model):
-    __tablename__ = 'review'
+class Order(db.Model):
+    __tablename__ = 'orders'
     
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    movie_id = db.Column(db.Integer, db.ForeignKey('movie.id'), nullable=False)
-    rating = db.Column(db.Integer, nullable=False)  # Rating out of 5
-    comment = db.Column(db.Text, nullable=True)
+    order_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
+    showtime_id = db.Column(db.Integer, db.ForeignKey('showtimes.showtime_id'), nullable=False)
+    order_date = db.Column(db.DateTime, default=db.func.current_timestamp(), nullable=False)
+    seat_number = db.Column(db.String(10), nullable=False)
+    ticket_type = db.Column(db.String(50), nullable=False)
+    price = db.Column(db.String(10), nullable=False)
+    service_fee = db.Column(db.String(10), nullable=False)
+    total_amount = db.Column(db.String(10), nullable=False)
+    email = db.Column(db.String(100), nullable=False)
+
+class PasswordReset(db.Model):
+    __tablename__ = 'password_resets'
+    
+    reset_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
+    email = db.Column(db.String(100), nullable=False)
+    reset_token = db.Column(db.String(100), nullable=False)
+    created_at = db.Column(db.DateTime, default=db.func.current_timestamp(), nullable=False)
 
 class Showtime(db.Model):
-    __tablename__ = 'showtime'
+    __tablename__ = 'showtimes'
     
-    id = db.Column(db.Integer, primary_key=True)
-    movie_id = db.Column(db.Integer, db.ForeignKey('movie.id'), nullable=False)
-    house_id = db.Column(db.Integer, db.ForeignKey('house.id'), nullable=False)
-    start_time = db.Column(db.DateTime, nullable=False)
+    showtime_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    movie_id = db.Column(db.Integer, db.ForeignKey('movies.movie_id'), nullable=False)
+    cinema_id = db.Column(db.Integer, db.ForeignKey('cinemas.cinema_id'), nullable=False)
+    show_date = db.Column(db.Date, nullable=False)
+    show_time = db.Column(db.Time, nullable=False)
+    hall_number = db.Column(db.String(10), nullable=False)
+    seat_number = db.Column(db.String(10), nullable=False)
+    price = db.Column(db.Numeric(10, 2), nullable=False)
+
+class User(db.Model):
+    __tablename__ = 'users'
+    
+    user_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    username = db.Column(db.String(10), nullable=False)
+    password = db.Column(db.String(10), nullable=False)
+    first_name = db.Column(db.String(50), nullable=False)
+    last_name = db.Column(db.String(50), nullable=False)
+    gender = db.Column(db.String(1), nullable=False)  # Assuming gender is a single character
+    birth_date = db.Column(db.Date, nullable=False)
+    phone = db.Column(db.String(15), nullable=False)
+    email = db.Column(db.String(100), nullable=False, unique=True)
+    email_subscription = db.Column(db.String(1), nullable=False)  # Assuming it's a single character
+    occupation = db.Column(db.String(50), nullable=True)
+    income_level = db.Column(db.String(50), nullable=True)
+    work_location = db.Column(db.String(100), nullable=True)
+    residence_location = db.Column(db.String(100), nullable=True)
