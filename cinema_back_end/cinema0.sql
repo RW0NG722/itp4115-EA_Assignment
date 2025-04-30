@@ -165,5 +165,38 @@ CREATE TABLE `showtimes`  (
   CONSTRAINT `showtimes_ibfk_2` FOREIGN KEY (`cinema_id`) REFERENCES `cinemas` (`cinema_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
+-- ----------------------------
+-- Table structure for members
+-- ----------------------------
+DROP TABLE IF EXISTS `members`;
+CREATE TABLE `members`  (
+  `member_type` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `member_price` int(10) NOT NULL,
+  PRIMARY KEY (`member_type`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of members
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for advertisements
+-- ----------------------------
+DROP TABLE IF EXISTS `advertisements`;
+CREATE TABLE `advertisements`  (
+  `ad_id` int(11) NOT NULL AUTO_INCREMENT,
+  `ad_title` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `ad_content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `start_date` date NOT NULL,
+  `end_date` date NOT NULL,
+  `member_type` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`ad_id`) USING BTREE,
+  INDEX `member_type`(`member_type`) USING BTREE,
+  CONSTRAINT `advertisements_ibfk_1` FOREIGN KEY (`member_type`) REFERENCES `members` (`member_type`) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of advertisements
+-- ----------------------------
 
 SET FOREIGN_KEY_CHECKS = 1;
