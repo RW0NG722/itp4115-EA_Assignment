@@ -2,53 +2,54 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
-class User(db.Model):
-    __tablename__ = 'users'
-    
-    user_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    user_name = db.Column(db.String(10), nullable=False)
-    password = db.Column(db.String(10), nullable=False)
-    first_name = db.Column(db.String(50), nullable=False)
-    last_name = db.Column(db.String(50), nullable=False)
-    gender = db.Column(db.String(1), nullable=False)  # Assuming gender is a single character
-    birth_date = db.Column(db.Date, nullable=False)
-    phone = db.Column(db.String(15), nullable=False)
-    email = db.Column(db.String(100), nullable=False, unique=True)
-    email_subscription = db.Column(db.String(1), nullable=False)  # Assuming it's a single character
-    occupation = db.Column(db.String(50), nullable=True)
-    income_level = db.Column(db.String(50), nullable=True)
-    work_location = db.Column(db.String(100), nullable=True)
-    residence_location = db.Column(db.String(100), nullable=True)
+class Advertisement(db.Model):
+    __tablename__ = 'advertisements'
 
-class Cinemas(db.Model):
+    ad_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    ad_title = db.Column(db.String(100), nullable=False)
+    ad_content = db.Column(db.Text, nullable=False)
+    start_date = db.Column(db.Date, nullable=False)
+    end_date = db.Column(db.Date, nullable=False)
+    member_type = db.Column(db.String(10), db.ForeignKey('members.member_type'), nullable=True)
+
+    member = db.relationship('Member', backref='advertisements')
+
+class Cinema(db.Model):
     __tablename__ = 'cinemas'
-    
+
     cinema_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    name = db.Column(db.String(100), nullable=False)
+    cinema_name = db.Column(db.String(100), nullable=False)
     address = db.Column(db.String(255), nullable=False)
     capacity = db.Column(db.Integer, nullable=False)
 
-class Houses(db.Model):
+    houses = db.relationship('House', backref='cinema')
+    showtimes = db.relationship('Showtime', backref='cinema')
+
+class House(db.Model):
     __tablename__ = 'houses'
 
-    house_id = db.Column(db.Integer, primary_key=True)
-    cinema_id = db.Column(db.Integer, db.ForeignKey('cinemas.cinema_id'), nullable=False)  
-    house_name = db.Column(db.String(100), nullable=False)  
-    house_type = db.Column(db.String(100), nullable=False)  
-    house_available = db.Column(db.Boolean, default=True)  
+    house_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    cinema_id = db.Column(db.Integer, db.ForeignKey('cinemas.cinema_id'), nullable=False)
+    house_name = db.Column(db.String(100), nullable=False)
+    house_type = db.Column(db.String(100), nullable=False)
+    house_available = db.Column(db.String(1), nullable=False)  #char(1)
 
-class Seats(db.Model):
-    __tablename__ = 'seats'
+    seats = db.relationship('Seat', backref='house')
+    showtimes = db.relationship('Showtime', backref='house')
 
-    seat_id = db.Column(db.Integer, primary_key=True)
-    house_id = db.Column(db.Integer, db.ForeignKey('houses.house_id'), nullable=False) 
-    seat_name = db.Column(db.String(10), nullable=False)  
-    seat_available = db.Column(db.Boolean, default=True)  
-    seat_type = db.Column(db.String(20), nullable=False)  
+class Member(db.Model):
+    __tablename__ = 'members'
 
-class Movies(db.Model):
+    member_type = db.Column(db.String(10), primary_key=True)
+    member_price = db.Column(db.Integer, nullable=False)
+
+    users = db.relationship('User', backref='member')
+    advertisements = db.relationship('Advertisement', backref='member')
+    orders = db.relationship('Order', backref='member')
+
+class Movie(db.Model):
     __tablename__ = 'movies'
-    
+
     movie_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     title = db.Column(db.String(100), nullable=False)
     release_date = db.Column(db.Date, nullable=False)
@@ -57,33 +58,66 @@ class Movies(db.Model):
     synopsis = db.Column(db.Text, nullable=False)
     director = db.Column(db.String(100), nullable=False)
     cast = db.Column(db.Text, nullable=False)
-    movie_type = db.Column(db.String(11), nullable=False)  # Assuming type is a single character
+    movie_type = db.Column(db.String(11), nullable=False)  #char(11)
 
-class Orders(db.Model):
+    showtimes = db.relationship('Showtime', backref='movie')
+
+class Order(db.Model):
     __tablename__ = 'orders'
-    
+
     order_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
     showtime_id = db.Column(db.Integer, db.ForeignKey('showtimes.showtime_id'), nullable=False)
-    order_date = db.Column(db.DateTime, default=db.func.current_timestamp(), nullable=False)
-    seat_name = db.Column(db.String(10), db.ForeignKey('seats.seat_name'), nullable=False)
-    member_price = db.Column(db.Integer, db.ForeignKey('member.member_price'), nullable=False)
+    order_date = db.Column(db.DateTime, server_default=db.func.now(), nullable=False) #timestamp
+    seat_id = db.Column(db.Integer, db.ForeignKey('seats.seat_id'), nullable=False)
+    ticket_type = db.Column(db.String(50), nullable=False)
+    price = db.Column(db.Float, nullable=False)
+    service_fee = db.Column(db.Float, nullable=False)
     total_amount = db.Column(db.Float, nullable=False)
-    email = db.column(db.Integer, db.ForeignKey('seats.seat_name'), nullable=False)
+    email = db.Column(db.String(100), nullable=False)
+    member_type = db.Column(db.String(10), db.ForeignKey('members.member_type'), nullable=True)
 
-class Showtimes(db.Model):
+    user = db.relationship('User', backref='orders')
+    seat = db.relationship('Seat', backref='orders')
+    showtime = db.relationship('Showtime', backref='orders')
+
+class Seat(db.Model):
+    __tablename__ = 'seats'
+
+    seat_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    house_id = db.Column(db.Integer, db.ForeignKey('houses.house_id'), nullable=False)
+    seat_name = db.Column(db.String(10), nullable=False)
+    seat_type = db.Column(db.String(10), nullable=False)
+    seat_available = db.Column(db.String(1), nullable=False)  #char(1)
+
+class Showtime(db.Model):
     __tablename__ = 'showtimes'
-    
+
     showtime_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     movie_id = db.Column(db.Integer, db.ForeignKey('movies.movie_id'), nullable=False)
     cinema_id = db.Column(db.Integer, db.ForeignKey('cinemas.cinema_id'), nullable=False)
-    house_name = db.Column(db.Integer, db.ForeignKey('houses.house_id'), nullable=False)
     show_date = db.Column(db.Date, nullable=False)
     show_time = db.Column(db.Time, nullable=False)
-    house_name = db.Column(db.String(100), nullable=False)
+    house_id = db.Column(db.Integer, db.ForeignKey('houses.house_id'), nullable=False)
+    price = db.Column(db.Numeric(10, 2), nullable=False)  #decimal(10,2)
 
-class Member(db.Model):
-    __tablename__ = 'members'
-    member_type = db.Column(db.String(100), primary_key=True, nullable=False)
-    member_price = db.Column(db.Integer, nullable=False)
+class User(db.Model):
+    __tablename__ = 'users'
 
+    user_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    username = db.Column(db.String(10), nullable=False)
+    password = db.Column(db.String(10), nullable=False)
+    first_name = db.Column(db.String(50), nullable=False)
+    last_name = db.Column(db.String(50), nullable=False)
+    gender = db.Column(db.String(1), nullable=False)  #char(1)
+    birth_date = db.Column(db.Date, nullable=False)
+    phone = db.Column(db.String(15), nullable=False)
+    email = db.Column(db.String(100), unique=True, nullable=False)
+    email_subscription = db.Column(db.String(1), nullable=False) #char(1)
+    occupation = db.Column(db.String(50), nullable=True)
+    income_level = db.Column(db.String(50), nullable=True)
+    work_location = db.Column(db.String(100), nullable=True)
+    residence_location = db.Column(db.String(100), nullable=True)
+    member_type = db.Column(db.String(10), db.ForeignKey('members.member_type'), nullable=True)
+
+    member = db.relationship('Member', backref='users')
