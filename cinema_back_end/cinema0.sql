@@ -170,7 +170,7 @@ CREATE TABLE `showtimes`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `members`;
 CREATE TABLE `members`  (
-  `member_type` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `member_type` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `member_price` int(10) NOT NULL,
   PRIMARY KEY (`member_type`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
@@ -184,7 +184,7 @@ CREATE TABLE `members`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `advertisements`;
 CREATE TABLE `advertisements`  (
-  `ad_id` int(11) NOT NULL AUTO_INCREMENT,
+  `ad_id` int(50) NOT NULL AUTO_INCREMENT,
   `ad_title` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `ad_content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `start_date` date NOT NULL,
