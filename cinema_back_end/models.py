@@ -60,10 +60,10 @@ class Orders(db.Model):
         db.DateTime, default=db.func.current_timestamp(), nullable=False
     )
     seat_number = db.Column(
-        db.Integer, db.ForeignKey("seats.seat_number"), nullable=False
+        db.String, db.ForeignKey("seats.seat_number"), nullable=False
     )
-    price = db.Column(db.String(10), nullable=False)
-    email = db.Column(db.Integer, db.ForeignKey("seats.seat_number"), nullable=False)
+    price = db.Column(db.Integer, nullable=False)
+    email = db.Column(db.String(100), nullable=False)
 
 
 class Showtimes(db.Model):
