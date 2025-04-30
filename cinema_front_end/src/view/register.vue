@@ -1,152 +1,157 @@
 <template>
-  <GlobalHeader />
-  <a-form
-    :model="formState"
-    name="basic"
-    labelAlign="left"
-    :label-col="{ span: 3, offset: 1 }"
-    :wrapper-col="{ span: 16 }"
-    autocomplete="off"
-    @finish="onFinish"
-    @finishFailed="onFinishFailed"
-  >
-    账户资料
-    <a-form-item
-      label="用户名"
-      name="user_name"
-      :rules="[{ required: true, message: 'Please input your username!' }]"
+  <div>
+    <GlobalHeader />
+    <a-form
+      :model="formState"
+      name="basic"
+      labelAlign="left"
+      :label-col="{ span: 3, offset: 1 }"
+      :wrapper-col="{ span: 16 }"
+      autocomplete="off"
+      @finish="onFinish"
+      @finishFailed="onFinishFailed"
     >
-      <a-input v-model:value="formState.user_name" />
-    </a-form-item>
-
-    <a-form-item
-      label="密码"
-      name="password"
-      :rules="[{ required: true, message: 'Please input your password!' }]"
-    >
-      <a-input-password v-model:value="formState.password" />
-    </a-form-item>
-    <a-form-item
-      label="重新输入密码"
-      name="confirm_password"
-      :rules="[{ required: true, message: 'Please confirm your password!' }]"
-    >
-      <a-input-password v-model:value="formState.confirm_password" />
-    </a-form-item>
-
-    <Divider />
-    基本资料
-    <a-form-item
-      label="名"
-      name="first_name"
-      :rules="[{ required: true, message: 'Please input your first name!' }]"
-    >
-      <a-input v-model:value="formState.first_name" />
-    </a-form-item>
-
-    <a-form-item
-      label="姓"
-      name="last_name"
-      :rules="[{ required: true, message: 'Please input your last name!' }]"
-    >
-      <a-input v-model:value="formState.last_name" />
-    </a-form-item>
-    <a-form-item label="性别" name="gender">
-      <a-radio-group v-model:value="formState.gender">
-        <a-radio :value="'男'">男</a-radio>
-        <a-radio :value="'女'">女</a-radio>
-      </a-radio-group>
-    </a-form-item>
-    <a-form-item label="出生日期" name="birth_date">
-      <DatePicker v-model:value="birth_date" />
-    </a-form-item>
-
-    <Divider />
-    联络资料
-    <a-form-item
-      label="手提电话"
-      name="phone"
-      :rules="[{ required: true, message: 'Please input your phone number!' }]"
-    >
-      <a-input v-model:value="formState.phone" />
-    </a-form-item>
-
-    <a-form-item
-      label="电邮"
-      name="email"
-      :rules="[{ required: true, message: 'Please input your email!' }]"
-    >
-      <a-input v-model:value="formState.email" />
-    </a-form-item>
-    <a-form-item
-      label="确定电邮"
-      name="confirm_email"
-      :rules="[{ required: true, message: 'Please confirm your email!' }]"
-    >
-      <a-input v-model:value="formState.confirm_email" />
-    </a-form-item>
-    <a-form-item
-      label="接受电子宣传邮件"
-      name="receive_email"
-      :rules="[
-        {
-          required: true,
-          message: 'Which method do you want to receive our email?',
-        },
-      ]"
-    >
-      <a-radio-group v-model:value="formState.receive_email">
-        <a-radio :value="1">是(中文)</a-radio>
-        <a-radio :value="2">是(英文)</a-radio>
-        <a-radio :value="3">否</a-radio>
-      </a-radio-group>
-    </a-form-item>
-
-    <Divider />
-    其他资料
-    <a-form-item label="职业" name="cereer">
-      <a-cascader
-        v-model:value="formState.cereer"
-        :options="cereer"
-        placeholder="Please select"
-      />
-    </a-form-item>
-
-    <a-form-item label="入息" name="income_level">
-      <a-cascader
-        v-model:value="formState.income_level"
-        :options="income"
-        placeholder="Please select"
-      />
-    </a-form-item>
-    <a-form-item label="工作地区" name="work_location">
-      <a-cascader
-        v-model:value="formState.work_location"
-        :options="area"
-        placeholder="Please select"
-      />
-    </a-form-item>
-    <a-form-item label="居住地区" name="residence_location">
-      <a-cascader
-        v-model:value="formState.residence_location"
-        :options="area"
-        placeholder="Please select"
-      />
-    </a-form-item>
-
-    <a-form-item :wrapper-col="{ offset: 2, span: 16 }">
-      <a-button type="primary" html-type="submit" @click="onSubmit"
-        >Submit</a-button
+      账户资料
+      <a-form-item
+        label="用户名"
+        name="user_name"
+        :rules="[{ required: true, message: 'Please input your username!' }]"
       >
-    </a-form-item>
-  </a-form>
+        <a-input v-model:value="formState.user_name" />
+      </a-form-item>
+
+      <a-form-item
+        label="密码"
+        name="password"
+        :rules="[{ required: true, message: 'Please input your password!' }]"
+      >
+        <a-input-password v-model:value="formState.password" />
+      </a-form-item>
+      <a-form-item
+        label="重新输入密码"
+        name="confirm_password"
+        :rules="[{ required: true, message: 'Please confirm your password!' }]"
+      >
+        <a-input-password v-model:value="formState.confirm_password" />
+      </a-form-item>
+
+      <Divider />
+      基本资料
+      <a-form-item
+        label="名"
+        name="first_name"
+        :rules="[{ required: true, message: 'Please input your first name!' }]"
+      >
+        <a-input v-model:value="formState.first_name" />
+      </a-form-item>
+
+      <a-form-item
+        label="姓"
+        name="last_name"
+        :rules="[{ required: true, message: 'Please input your last name!' }]"
+      >
+        <a-input v-model:value="formState.last_name" />
+      </a-form-item>
+      <a-form-item label="性别" name="gender">
+        <a-radio-group v-model:value="formState.gender">
+          <a-radio :value="'男'">男</a-radio>
+          <a-radio :value="'女'">女</a-radio>
+        </a-radio-group>
+      </a-form-item>
+      <a-form-item label="出生日期" name="birth_date">
+        <DatePicker v-model:value="birth_date" />
+      </a-form-item>
+
+      <Divider />
+      联络资料
+      <a-form-item
+        label="手提电话"
+        name="phone"
+        :rules="[
+          { required: true, message: 'Please input your phone number!' },
+        ]"
+      >
+        <a-input v-model:value="formState.phone" />
+      </a-form-item>
+
+      <a-form-item
+        label="电邮"
+        name="email"
+        :rules="[{ required: true, message: 'Please input your email!' }]"
+      >
+        <a-input v-model:value="formState.email" />
+      </a-form-item>
+      <a-form-item
+        label="确定电邮"
+        name="confirm_email"
+        :rules="[{ required: true, message: 'Please confirm your email!' }]"
+      >
+        <a-input v-model:value="formState.confirm_email" />
+      </a-form-item>
+      <a-form-item
+        label="接受电子宣传邮件"
+        name="email_subscription"
+        :rules="[
+          {
+            required: true,
+            message: 'Which method do you want to receive our email?',
+          },
+        ]"
+      >
+        <a-radio-group v-model:value="formState.email_subscription">
+          <a-radio :value="1">是(中文)</a-radio>
+          <a-radio :value="2">是(英文)</a-radio>
+          <a-radio :value="3">否</a-radio>
+        </a-radio-group>
+      </a-form-item>
+
+      <Divider />
+      其他资料
+      <a-form-item label="职业" name="occupation">
+        <a-cascader
+          v-model:value="formState.occupation"
+          :options="cereer"
+          placeholder="Please select"
+        />
+      </a-form-item>
+
+      <a-form-item label="入息" name="income_level">
+        <a-cascader
+          v-model:value="formState.income_level"
+          :options="income"
+          placeholder="Please select"
+        />
+      </a-form-item>
+      <a-form-item label="工作地区" name="work_location">
+        <a-cascader
+          v-model:value="formState.work_location"
+          :options="area"
+          placeholder="Please select"
+        />
+      </a-form-item>
+      <a-form-item label="居住地区" name="residence_location">
+        <a-cascader
+          v-model:value="formState.residence_location"
+          :options="area"
+          placeholder="Please select"
+        />
+      </a-form-item>
+
+      <a-form-item :wrapper-col="{ offset: 2, span: 16 }">
+        <a-button type="primary" html-type="submit" @click="onSubmit"
+          >Submit</a-button
+        >
+      </a-form-item>
+    </a-form>
+  </div>
 </template>
 <script lang="ts" setup>
   import { DatePicker, Divider, message } from 'ant-design-vue'
   import { Dayjs } from 'dayjs'
   import { reactive, ref, watch } from 'vue'
   import axios from 'axios'
-import GlobalHeader from './GlobalHeader.vue'
+  import GlobalHeader from './GlobalHeader.vue'
+  import router from '@/modules/router/router'
 
   interface FormState {
     user_name: string
@@ -159,8 +164,8 @@ import GlobalHeader from './GlobalHeader.vue'
     phone: string
     email: string
     confirm_email: string
-    receive_email: number
-    cereer: string
+    email_subscription: number
+    occupation: string
     income_level: string
     work_location: string
     residence_location: string
@@ -178,8 +183,8 @@ import GlobalHeader from './GlobalHeader.vue'
 
   const formState = reactive<FormState>({
     user_name: '1',
-    password: '2',
-    confirm_password: '3',
+    password: '1234',
+    confirm_password: '1234',
     first_name: '4',
     last_name: '5',
     gender: '1',
@@ -187,8 +192,8 @@ import GlobalHeader from './GlobalHeader.vue'
     phone: '1',
     email: '1',
     confirm_email: '1',
-    receive_email: 1,
-    cereer: '',
+    email_subscription: 1,
+    occupation: '',
     income_level: '',
     work_location: '',
     residence_location: '',
@@ -207,24 +212,28 @@ import GlobalHeader from './GlobalHeader.vue'
     console.log('submit', formState)
   }
   const onFinish = (values: any) => {
-    if (validateForm()) {
+    if (!validateForm()) {
       return
     }
-    // axios.post('http://localhost:5173/api/test', values).then((res) => {
-    //   if (res.status === 200) {
-    //     message.success('注册成功')
-    //   } else {
-    //     message.error('注册失败')
-    //   }
-    // })
     axios({
       method: 'post',
-      url: 'http://localhost:5173/api/test',
-      data: values,
+      url: 'http://localhost:5000/signup',
+      data: {
+        ...values,
+        income_level: formState.income_level[0],
+        occupation: formState.occupation[0],
+        residence_location:
+          formState.residence_location[0] +
+          '-' +
+          formState.residence_location[1],
+        work_location:
+          formState.work_location[0] + '-' + formState.work_location[1],
+      },
     })
       .then((response) => {
         console.log('Response:', response.data)
         message.success('注册成功')
+        router.push('/login')
       })
       .catch((error) => {
         console.error('Error:', error)

@@ -32,10 +32,46 @@
           </TabPane>
         </Tabs>
         <div class="border w-60 h-[870px]">
-          <div>戏院</div>
-          <div>九龙</div>
-          <div>香港</div>
-          <div>新界</div>
+          <div align="left" class="text-2xl ml-3 mt-2">戏院</div>
+          <a-row class="mt-3">
+            <a-col :span="8" class="cinemas_region"> 九龙 </a-col>
+            <a-col :span="16">
+              <div
+                class="mb-2"
+                align="left"
+                v-for="cinema in jiulong"
+                :key="cinema"
+              >
+                {{ cinema }}
+              </div>
+            </a-col>
+          </a-row>
+          <a-row class="mt-3">
+            <a-col :span="8" class="cinemas_region"> 香港 </a-col>
+            <a-col :span="16">
+              <div
+                class="mb-2"
+                align="left"
+                v-for="cinema in hongkong"
+                :key="cinema"
+              >
+                {{ cinema }}
+              </div></a-col
+            >
+          </a-row>
+          <a-row class="mt-3">
+            <a-col :span="8" class="cinemas_region"> 新界 </a-col>
+            <a-col :span="16">
+              <div
+                class="mb-2"
+                align="left"
+                v-for="cinema in newTerritories"
+                :key="cinema"
+              >
+                {{ cinema }}
+              </div></a-col
+            >
+          </a-row>
         </div>
       </Space>
     </a-col>
@@ -50,5 +86,27 @@
   import GiftCardShop from './tabs/GiftCardShop.vue'
   import IndexCarousel from './IndexCarousel.vue'
   import GlobalHeader from '../GlobalHeader.vue'
+
+  const jiulong = [
+    'GALA CINEMA (朗豪坊)',
+    'B+ cinema MOKO (旺角東)',
+    'B+ cinema apm (觀塘)',
+    'PREMIERE ELEMENTS',
+    '電影中心',
+    '旺角',
+  ]
+
+  const hongkong = [
+    'MOViE MOViE Pacific Place (金鐘)',
+    'MOViE MOViE Cityplaza (太古城)',
+    'PALACE ifc',
+  ]
+
+  const newTerritories = ['MY CINEMA YOHO MALL', '葵芳', '荃灣', '嘉湖']
 </script>
-<style scoped></style>
+<style scoped>
+  .cinemas_region {
+    color: #9c7738;
+    font-size: 15px;
+  }
+</style>

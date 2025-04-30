@@ -5,21 +5,21 @@ import router from '../router/router'
 
 export const useUserStore = defineStore('user', {
   state: () => ({
-    userInfo:{
+    userInfo: {
       user_id: '',
       user_name: '',
       email: '',
       user_age: undefined,
-      first_name:'',
+      first_name: '',
       last_name: '',
       gender: '',
-      birth_date:'',
-      phone:'',
-      email_subscription:'',
-      occupation:'',
-      income_level:'',
-      work_location:'',
-      residence_location:''
+      birth_date: '',
+      phone: '',
+      email_subscription: '',
+      occupation: '',
+      income_level: '',
+      work_location: '',
+      residence_location: '',
     },
   }),
   getters: {
@@ -29,23 +29,23 @@ export const useUserStore = defineStore('user', {
     login(email: string, password: string) {
       axios({
         method: 'post',
-        url: 'https://upgraded-zebra-69rjq7669x77cr767-5000.app.github.dev/login',
+        // url: 'https://upgraded-zebra-69rjq7669x77cr767-5000.app.github.dev/login',
+        url: 'http://localhost:5000/login',
         data: { email, password },
       }).then((res) => {
         const data = res.data
-        if(data.code==200){
+        if (data.code == 200) {
           console.log(data.data.user_name)
           this.setUserInfo(data.data)
-          message.success("登录成功")
-          router.push('#/')
+          message.success('登录成功')
+          router.push('/')
         }
       })
-      
     },
     setUserInfo(userInfo: any) {
       this.userInfo = userInfo
     },
-    setUserName(username: string){
+    setUserName(username: string) {
       this.username = username
     },
 

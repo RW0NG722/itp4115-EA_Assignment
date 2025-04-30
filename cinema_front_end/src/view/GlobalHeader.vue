@@ -60,7 +60,7 @@
   import { Dropdown } from 'ant-design-vue'
 
   const user = useUserStore()
-  const userName = ref(user.userName)
+  const userName = ref(user.getUserInfo.user_name)
 </script>
 <style>
   .nav-tabs {
