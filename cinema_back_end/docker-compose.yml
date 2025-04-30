@@ -1,0 +1,41 @@
+version: '3.9'
+
+services:
+  web1:
+    image: cinema # 替换为你的本地 web 镜像名称
+    container_name: cinema-container
+    ports:
+      - "5000:8088"
+    networks:
+      - app-network
+    depends_on:
+      - db # 确保数据库容器先启动
+
+  web2:
+    image: cinema # 替换为你的本地 web 镜像名称
+    container_name: cinema-container
+    ports:
+      - "5000:8888"
+    networks:
+      - app-network
+    depends_on:
+      - db # 确保数据库容器先启动
+
+  db:
+    image: mysql:5.7.26 # 使用官方 MySQL 镜像
+    container_name: mysql-container
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456 # 设置 MySQL root 用户密码
+      MYSQL_DATABASE: cinema # 初始化数据库名称
+      MYSQL_USER: myuser # 创建的用户
+      MYSQL_PASSWORD: mypassword # 用户密码
+    ports:
+      - "3306:3306" # 将容器的 3306 端口映射到主机的 3306 端口
+    volumes:
+      - ./init-sql:/docker-entrypoint-initdb.d # 将初始化数据库放到init-sql文件，MySQL官方镜像在项目启动时会自动执行挂载到该目录中的sql文件
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

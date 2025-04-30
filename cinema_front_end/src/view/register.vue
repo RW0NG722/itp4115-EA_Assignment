@@ -217,7 +217,7 @@
     }
     axios({
       method: 'post',
-      url: 'http://192.168.21.129:8088/signup',
+      url: 'http://54.174.200.10:35123/signup',
       data: {
         ...values,
         income_level: formState.income_level[0],
