@@ -22,13 +22,10 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 DROP TABLE IF EXISTS `cinemas`;
 CREATE TABLE `cinemas`  (
-  `cinema_id` int(11) NOT NULL AUTO_INCREMENT,
+  `cinema_id` int NOT NULL AUTO_INCREMENT,
   `cinema_name` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `address` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `capacity` int(11) NOT NULL,
-  `house` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `sent` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `format` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`cinema_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
@@ -41,10 +38,10 @@ CREATE TABLE `cinemas`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `houses`;
 CREATE TABLE `houses` (
-  `house_id` int(11) NOT NULL AUTO_INCREMENT,
+  `house_id` int NOT NULL AUTO_INCREMENT,
   `cinema_id` int NOT NULL,
   `house_name` VARCHAR(100) NOT NULL,
-  `house_type` int NOT NULL,
+  `house_type` VARCHAR(100) NOT NULL,
   `house_available` char(1) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`cinema_id`) USING BTREE,
   FOREIGN KEY (`cinema_id`) REFERENCES `cinemas`(`cinema_id`)
@@ -61,7 +58,7 @@ DROP TABLE IF EXISTS `seats`;
 CREATE TABLE `seats` (
   `seat_id` int(11) NOT NULL AUTO_INCREMENT,
   `house_id` int NOT NULL,
-  `seat_name` VARCHAR(100) NOT NULL,
+  `seat_name` VARCHAR(10) NOT NULL,
   `seat_type` VARCHAR(10) NOT NULL,
   `seat_available` char(1) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`seat_id`) USING BTREE,
@@ -77,10 +74,10 @@ CREATE TABLE `seats` (
 -- ----------------------------
 DROP TABLE IF EXISTS `movies`;
 CREATE TABLE `movies`  (
-  `movie_id` int(11) NOT NULL AUTO_INCREMENT,
+  `movie_id` int NOT NULL AUTO_INCREMENT,
   `title` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `release_date` date NOT NULL,
-  `duration` int(11) NOT NULL,
+  `duration` int NOT NULL,
   `language` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `synopsis` text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `director` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
@@ -104,16 +101,17 @@ CREATE TABLE `orders`  (
   `order_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `seat_name` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `ticket_type` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `price` int(11) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `service_fee` int(11) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `total_amount` int(11) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `price` FLOAT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `service_fee` FLOAT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `total_amount` FLOAT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `email` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`order_id`) USING BTREE,
   INDEX `user_id`(`user_id`) USING BTREE,
   INDEX `showtime_id`(`showtime_id`) USING BTREE,
   CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`showtime_id`) REFERENCES `showtimes` (`showtime_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+  CONSTRAINT `showtimes_ibfk_3` FOREIGN KEY (`seat_name`) REFERENCES `seats` (`seat_name`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of orders
@@ -168,6 +166,42 @@ CREATE TABLE `users`  (
 
 -- ----------------------------
 -- Records of users
+-- ----------------------------
+-- ----------------------------
+-- Table structure for showtimes
+-- ----------------------------
+DROP TABLE IF EXISTS `showtimes`;
+CREATE TABLE `showtimes`  (
+  `showtime_id` int(11) NOT NULL AUTO_INCREMENT,
+  `movie_id` int(11) NOT NULL,
+  `cinema_id` int(11) NOT NULL,
+  `show_date` date NOT NULL,
+  `show_time` time NOT NULL,
+  `house_id` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `price` decimal(10, 2) NOT NULL,
+  PRIMARY KEY (`showtime_id`) USING BTREE,
+  INDEX `movie_id`(`movie_id`) USING BTREE,
+  INDEX `cinema_id`(`cinema_id`) USING BTREE,
+  CONSTRAINT `showtimes_ibfk_1` FOREIGN KEY (`movie_id`) REFERENCES `movies` (`movie_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `showtimes_ibfk_2` FOREIGN KEY (`cinema_id`) REFERENCES `cinemas` (`cinema_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `showtimes_ibfk_3` FOREIGN KEY (`house_id`) REFERENCES `houses` (`house_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of showtimes
+-- ----------------------------
+-- ----------------------------
+-- Table structure for Member_type
+-- ----------------------------
+DROP TABLE IF EXISTS `members`;
+CREATE TABLE `members` (
+  `member_type` VARCHAR(10) NOT NULL,
+  `member_price` int(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  PRIMARY KEY (`member_type`) USING BTREE,
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of Member
 -- ----------------------------
 
 SET FOREIGN_KEY_CHECKS = 1;

@@ -2,7 +2,7 @@ from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 import os
-from models import db, User, Seats, Showtimes
+from models import db, Cinemas, Houses, Seats, Movies, Order, Showtimes, User
 from datetime import datetime
 
 app = Flask(__name__)
@@ -121,7 +121,7 @@ def login():
     return jsonify({'message': 'Login successful!', 'data': response_data, 'code': 200}), 200
     # return jsonify({}), 200
 
-@app.route('/users/<int:user_id>', methods=['PUT'])
+@app.route('/users/<int:user_id>', methods=['POST'])
 def edit_user(user_id):
     user = User.query.get_or_404(user_id)
     data = request.json
