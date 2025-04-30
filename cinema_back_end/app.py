@@ -6,7 +6,7 @@ from models import db, User, Seats, Showtimes, Orders
 from datetime import datetime
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "http://localhost:5173"}})
+CORS(app)
 app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://root:123456@localhost/cinema"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 

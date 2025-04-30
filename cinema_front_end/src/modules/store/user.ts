@@ -30,7 +30,8 @@ export const useUserStore = defineStore('user', {
       axios({
         method: 'post',
         // url: 'https://upgraded-zebra-69rjq7669x77cr767-5000.app.github.dev/login',
-        url: 'http://localhost:5000/login',
+        // url: 'http://localhost:5000/login',
+        url: 'http://192.168.21.129:8088/login',
         data: { email, password },
       }).then((res) => {
         const data = res.data

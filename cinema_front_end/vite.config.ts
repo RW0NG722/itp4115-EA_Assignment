@@ -14,4 +14,7 @@ export default defineConfig({
       },
     ],
   },
+  build: {
+    assetsInlineLimit: Number.MAX_VALUE,
+  },
 })

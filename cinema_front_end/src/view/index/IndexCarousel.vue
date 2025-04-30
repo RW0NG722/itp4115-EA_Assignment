@@ -2,7 +2,7 @@
   <Row>
     <Col :span="18" align="center">
       <a-carousel effect="fade">
-        <div v-for="i in 5" :key="i">
+        <div>
           <div style="display: flex; align-items: center">
             <div class="border w-[178px] h-[250px] ml-6 mt-3 mb-3">
               <img
@@ -22,6 +22,102 @@
                 referrerpolicy="strict-origin-when-cross-origin"
                 allowfullscreen
               />
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div style="display: flex; align-items: center">
+            <div class="border w-[178px] h-[250px] ml-6 mt-3 mb-3">
+              <img
+                src="https://mediafiles.cinema.com.hk/broadway/cmsimg/cinweb/movie/movie_1743672088.jpg"
+                alt="movie"
+                style="width: 100%; height: 100%"
+              />
+            </div>
+            <div class="border w-[65%] h-[250px] ml-8">
+              <iframe
+                width="100%"
+                height="100%"
+                src="https://www.youtube.com/embed/5UDyNgBkgv0?si=VZBxcAvLerBcZ5Ac"
+                title="YouTube video player"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin"
+                allowfullscreen
+              ></iframe>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div style="display: flex; align-items: center">
+            <div class="border w-[178px] h-[250px] ml-6 mt-3 mb-3">
+              <img
+                src="https://mediafiles.cinema.com.hk/broadway/cmsimg/cinweb/movie/movie_1744794603.jpg"
+                alt="movie"
+                style="width: 100%; height: 100%"
+              />
+            </div>
+            <div class="border w-[65%] h-[250px] ml-8">
+              <iframe
+                width="100%"
+                height="100%"
+                src="https://www.youtube.com/embed/AGpmfQAcMHo?si=zRaWDdUX2ek8mQha"
+                title="YouTube video player"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin"
+                allowfullscreen
+              ></iframe>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div style="display: flex; align-items: center">
+            <div class="border w-[178px] h-[250px] ml-6 mt-3 mb-3">
+              <img
+                src="https://mediafiles.cinema.com.hk/broadway/cmsimg/cinweb/movie/movie_1742190177.jpg"
+                alt="movie"
+                style="width: 100%; height: 100%"
+              />
+            </div>
+            <div class="border w-[65%] h-[250px] ml-8">
+              <iframe
+                width="100%"
+                height="100%"
+                src="https://www.youtube.com/embed/sHXvex0hWQ4?si=9vry0WEx6yWIocYv"
+                title="YouTube video player"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin"
+                allowfullscreen
+              ></iframe>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div style="display: flex; align-items: center">
+            <div class="border w-[178px] h-[250px] ml-6 mt-3 mb-3">
+              <img
+                src="https://mediafiles.cinema.com.hk/broadway/cmsimg/cinweb/movie/movie_1743150081.jpg"
+                alt="movie"
+                style="width: 100%; height: 100%"
+              />
+            </div>
+            <div class="border w-[65%] h-[250px] ml-8">
+              <iframe
+                width="100%"
+                height="100%"
+                src="https://www.youtube.com/embed/2qI2D2oU5fo?si=qcinw1Lhly3S-C0M"
+                title="YouTube video player"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin"
+                allowfullscreen
+              ></iframe>
             </div>
           </div>
         </div>
