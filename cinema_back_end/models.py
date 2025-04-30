@@ -98,3 +98,19 @@ class User(db.Model):
     income_level = db.Column(db.String(50), nullable=True)
     work_location = db.Column(db.String(100), nullable=True)
     residence_location = db.Column(db.String(100), nullable=True)
+
+class Member(db.Model):
+    __tablename__ = 'members'
+
+    member_type = db.Column(db.String(50), primary_key=True)
+    member_price = db.Column(db.Integer, nullable=False)
+
+class Advertisement(db.Model):
+    __tablename__ = 'advertisements'
+
+    ad_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    ad_title = db.Column(db.String(100), nullable=False)
+    ad_content = db.Column(db.Text, nullable=False)
+    start_date = db.Column(db.Date, nullable=False)
+    end_date = db.Column(db.Date, nullable=False)
+    member_type = db.Column(db.String(50), db.ForeignKey('members.member_type'), nullable=True)
