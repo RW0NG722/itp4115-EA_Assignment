@@ -30,18 +30,25 @@ export const useUserStore = defineStore('user', {
       axios({
         method: 'post',
         // url: 'https://upgraded-zebra-69rjq7669x77cr767-5000.app.github.dev/login',
-        // url: 'http://localhost:5000/login',
-        url: 'http://54.174.200.10:35123/login',
+        url: 'http://localhost:5000/login',
+        // url: 'http://54.174.200.10:35123/login',
         data: { email, password },
-      }).then((res) => {
-        const data = res.data
-        if (data.code == 200) {
-          console.log(data.data.user_name)
-          this.setUserInfo(data.data)
-          message.success('登录成功')
-          router.push('/')
-        }
       })
+        .then((res) => {
+          const data = res.data
+          if (data.code == 200) {
+            console.log(data.data.user_name)
+            this.setUserInfo(data.data)
+            message.success('登录成功')
+            router.push('/')
+          } else {
+            message.error(data.message || '登录失败')
+          }
+        })
+        .catch((err) => {
+          console.error(err)
+          message.error('网络错误，请稍后重试')
+        })
     },
     setUserInfo(userInfo: any) {
       this.userInfo = userInfo
