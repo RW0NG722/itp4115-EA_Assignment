@@ -90,7 +90,7 @@
             html-type="submit"
             class="login-form-button ml-5"
           >
-            登入
+            {{ isLocked ? `锁定 (${lockTime}s)` : '登入' }}
           </a-button>
         </a-form-item>
 
@@ -175,15 +175,42 @@
     remember: true,
   })
 
-  const onFinish = (values: any) => {
-    user.login(values.email, values.password)
+  const loginAttempts = ref(0)
+  const isLocked = ref(false)
+  const lockTime = ref(0)
+  let timer: any = null
+
+  const startLockTimer = () => {
+    isLocked.value = true
+    lockTime.value = 60
+    timer = setInterval(() => {
+      lockTime.value -= 1
+      if (lockTime.value <= 0) {
+        clearInterval(timer)
+        isLocked.value = false
+        loginAttempts.value = 0
+      }
+    }, 1000)
+  }
+
+  const onFinish = async (values: any) => {
+    if (isLocked.value) return
+    const success = await user.login(values.email, values.password)
+    if (!success) {
+      loginAttempts.value += 1
+      if (loginAttempts.value >= 3) {
+        startLockTimer()
+      }
+    } else {
+      loginAttempts.value = 0
+    }
   }
 
   const onFinishFailed = (errorInfo: any) => {
     console.log('Failed:', errorInfo)
   }
   const disabled = computed(() => {
-    return !(formState.email && formState.password)
+    return isLocked.value || !(formState.email && formState.password)
   })
 </script>
 <style scoped>
