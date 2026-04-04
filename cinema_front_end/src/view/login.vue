@@ -181,12 +181,14 @@
   let timer: any = null
 
   const startLockTimer = () => {
+    if (timer) clearInterval(timer)
     isLocked.value = true
     lockTime.value = 60
     timer = setInterval(() => {
       lockTime.value -= 1
       if (lockTime.value <= 0) {
         clearInterval(timer)
+        timer = null
         isLocked.value = false
         loginAttempts.value = 0
       }
