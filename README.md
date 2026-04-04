@@ -51,14 +51,14 @@ docker exec -i mysql-container mysql -uroot -p123456 cinema < cinema0.sql && ech
 cd /workspaces/itp4115-EA_Assignment/cinema_back_end && python3 -m venv .venv && . .venv/bin/activate && pip install -r requirements.txt
 cd /workspaces/itp4115-EA_Assignment/cinema_back_end && . .venv/bin/activate && flask run -h 0.0.0.0 -p 5000
 
-Frontend setup and run in different terminal:
+### Frontend setup and run in different terminal:
 
 cd /workspaces/itp4115-EA_Assignment/cinema_front_end && pnpm install
 
 cd /workspaces/itp4115-EA_Assignment/cinema_front_end && pnpm dev --host 0.0.0.0 --port 5173
 
 
-After codespace rebot
+## After codespace rebot
 docker ps -all
 
 docker rm xxxxx
@@ -80,13 +80,13 @@ if grep -qE '^127.0.0.1\s+db(\s|$)' /etc/hosts; then echo 'hosts entry exists'; 
 
 docker exec -i mysql-container mysql -uroot -p123456 cinema < cinema0.sql && echo 'sql import done'
 
-Backend setup and run:
+### Backend setup and run:
 
 cd /workspaces/itp4115-EA_Assignment/cinema_back_end && python3 -m venv .venv && . .venv/bin/activate && pip install -r requirements.txt
 
 cd /workspaces/itp4115-EA_Assignment/cinema_back_end && . .venv/bin/activate && flask run -h 0.0.0.0 -p 5000
 
-Frontend setup and run in different terminal:
+### Frontend setup and run in different terminal:
 
 cd /workspaces/itp4115-EA_Assignment/cinema_front_end && pnpm install
 
